@@ -91,18 +91,146 @@ _O Android Debug Bridge é uma ferramenta CLI versátil do AndroidSDK que nos pe
 
   - _Flags (parametros):_
 
-    - ``--empty`` → cria um projeto vazio (Hello World!)
+    - ``--empty`` → Cria um projeto vazio (Hello World!)
 
-    - ``--platforms`` → permite a seleção de uma pool de plataformas _(win/lin/macOS/android/ios)_
+    - ``--platforms`` → Permite a seleção de uma pool de plataformas _(win/lin/macOS/android/ios)_
 
-      - ex: ``flutter create meuApp --empty --platforms=android`` cria um projeto vazio apenas para android
+      - Exemplo: ``flutter create meuApp --empty --platforms=android`` → Cria um projeto vazio apenas para android
 
 **OBS:** _Nome do app → todas letras minúsculas, separação de palavras com ``"_"``_
 
 **DIAGNÓSTICO:**
 
-- ``flutter doctor`` → permite a correção de pequenos erros, checagem de dependências e identificação de parametros, **sempre** usar no começo do projeto
+- ``flutter doctor`` → Permite a correção de pequenos erros, checagem de dependências e identificação de parametros, **sempre** usar no começo do projeto
 
-- ``flutter clean`` → limpa o cache da build (apagando o apk anterior)
+- ``flutter clean`` → Limpa o cache da build (apagando o apk anterior)
 
-- ``flutter run -v`` → build do apk com verbose
+- ``flutter run -v`` → Build do apk com verbose
+
+**PUB (GERENCIADOR DE PACOTES):**
+
+_PUB → Public_
+
+- ``flutter pub add <nome-dependencia>`` → Adiciona uma dependência ao ````pubspec.yaml````, o arquivo que guarda as bibliotecas do projeto
+
+- ``flutter pub get`` → Instala todas as dependências dentro do ````pubspec.yaml````
+
+# **AULA 5 - ESTRUTURA DE APPs MOBILE - ELEMENTOS PAI, FILHO, ETC. (03-03-26)**
+
+**WIDGETS:**
+
+São elementos fundamentais (componentes) que podem ser reutilizados no meu código
+
+_Exemplo:_
+
+````
+Tela
+  Coluna
+    Centralizado
+    AppBar
+    Texto Principal
+````
+
+Cada um desses seria uma classe, um componente, que tem suas propriedades, note que tem uma certa hierarquia
+
+**ÁRVORE DE WIDGETS:**
+
+Os widgets são organizados hierarquicamente em uma estrutura de árvore.
+
+Cada aplicativo Flutter possui um widget principal chamado **MaterialApp ou CupertinoApp**
+
+Ele serve como a **raiz** da árvore de widgets. Dentro dessa árvore, cada widget tem um **pai** e **zero ou mais filhos**
+
+_Pai:_
+
+É o widget que contém outros widgets
+
+_Filho:_
+
+O widget que está dentro do elemento pai
+
+_Pense no HTML, um container seria um elemento pai, os elementos dentro dele são os filhos_
+
+_Exemplo:_
+
+````
+<html> → Pai raiz do projeto
+  <head>
+  <body>
+    <header>
+      <div>
+        <nav>
+    <section>
+      <div>
+      <div>
+        <div>
+````
+
+_Aqui:_
+
+``<head>`` & ``<body>`` → Elementos filhos de ``<html>``
+
+``<header>`` & ``<section>`` → Elementos filhos de ``<body>``
+
+``div`` → Elementos filhos dentro de ``<header>``, ``<section>``, até outra ``<div>`` na última linha
+
+_Widgets na parte inferior da árvore costumam ser de alto nível, como páginas e layouts, e á medida que você sobe na árvore, os widgets se tornam mais específicos_
+
+**WIDGETS DE ESTRUTURA:**
+
+São as bases que fornecem a estrutura base da tela, estruturando a UI
+
+_Scaffold:_
+
+O scaffold fornece a estrutura básica da tela, e já vem com widgets embutidos, como os abaixo:
+
+- AppBar (barra superior de navegação)
+
+- Body (corpo da tela)
+
+- FloatingActionButton (botão flutuante)
+
+- Drawer (menu lateral)
+
+- BottomNavigationBar (barra de navegação inferior)
+
+- SnackBar (notificações curtas)
+
+_Exemplo:_
+
+````
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( → Base
+      home: Scaffold( → Scaffold
+        appBar: AppBar( → Appbar
+          title: Text('Exemplo de Scaffold'),
+          backgroundColor: Colors.blue,
+        ),
+        body: Center( → Body, com texto no center
+          child: Text('Conteúdo da tela', style: TextStyle(fontSize: 20)),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print('Botão pressionado!');
+          }, → Botão flutuante, com ação ao clicar
+          child: Icon(Icons.add),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Perfil'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+````

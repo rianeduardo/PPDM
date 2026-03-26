@@ -128,7 +128,7 @@ Tela
   Coluna
     Centralizado
     AppBar
-    Texto Principal
+      Texto Principal
 ````
 
 Cada um desses seria uma classe, um componente, que tem suas propriedades, note que tem uma certa hierarquia
@@ -234,3 +234,26 @@ class MyApp extends StatelessWidget {
   }
 }
 ````
+
+# **AULA 6 - A ÁRVORE DE ELEMENTOS - VISUALIZAÇÃO - STATELESS & STATEFULL (26-03-26)**
+
+```mermaid
+graph BT
+
+  MApp["MaterialApp"]
+  StL["Stateless"]
+  StF["Statefull"]
+  Sca["Scaffold"]
+  Abar["AppBar"]
+  Bd["Body"]
+  Dr["Drawer"]
+  Bnb["BottomNavigationBar"]
+  Fab["FloatingActionButton"]
+  Snack["Snackbar"]
+
+  MApp --> StL & StF
+
+  StF & StL --> Sca
+
+  Sca --> Abar & Bd & Dr & Bnb & Fab & Snack
+```
